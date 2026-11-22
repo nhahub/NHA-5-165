@@ -4,6 +4,17 @@ This guide provides step-by-step instructions for deploying the **THERMOX AI** B
 
 ---
 
+## 🚀 Live Production Deployments
+
+| Component | Platform | URL |
+| :--- | :--- | :--- |
+| **Frontend Web App** | Vercel | [**thermoxai.vercel.app**](https://thermoxai.vercel.app/) |
+| **Backend API (Swagger Docs)** | Render | [**thermox-ai.onrender.com/docs**](https://thermox-ai.onrender.com/docs) |
+| **Backend Health Endpoint** | Render | [**thermox-ai.onrender.com/api/health**](https://thermox-ai.onrender.com/api/health) |
+| **Interactive Research Colab** | Google Colab | [**Open in Google Colab**](https://colab.research.google.com/drive/1trevsvjMaN1i5Mov2enUExiX9mxFGKLk?usp=sharing#scrollTo=eGxbrK_s1uYY) |
+
+---
+
 ## 1. Backend Deployment on Render (FastAPI)
 
 [Render](https://render.com) hosts the Python FastAPI application that runs real-time inference on the bundled machine learning models (`artifacts/production/model_bundle.joblib`).
