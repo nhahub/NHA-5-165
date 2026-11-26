@@ -1,13 +1,7 @@
 # THERMOX AI: Building Energy Efficiency Prediction & 3D Digital Twin
 
-[![Live Web Application](https://img.shields.io/badge/Vercel-Live%20App-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://thermoxai.vercel.app/)
-[![API Swagger Docs](https://img.shields.io/badge/Render-API%20Docs-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://thermox-ai.onrender.com/docs)
-[![Google Colab](https://img.shields.io/badge/Google%20Colab-Research%20Notebook-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/1trevsvjMaN1i5Mov2enUExiX9mxFGKLk?usp=sharing#scrollTo=eGxbrK_s1uYY)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org)
-[![Three.js](https://img.shields.io/badge/Three.js-WebGL%203D-black?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4+-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
-[![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-EB5424?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io)
+[![Live Web Application](https://img.shields.io/badge/Vercel-Live%20App-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://thermoxai.vercel.app/) [![API Swagger Docs](https://img.shields.io/badge/Render-API%20Docs-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://thermox-ai.onrender.com/docs) [![Google Colab](https://img.shields.io/badge/Google%20Colab-Research%20Notebook-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/drive/1trevsvjMaN1i5Mov2enUExiX9mxFGKLk?usp=sharing#scrollTo=eGxbrK_s1uYY) [![AWS](https://shields.io)](https://amazon.com) [![Amazon SageMaker](https://shields.io)](https://amazon.comsagemaker/) [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com) [![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org) [![Three.js](https://img.shields.io/badge/Three.js-WebGL%203D-black?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org) [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4+-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org) [![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-EB5424?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io)
+
 
 **Digital Egypt Pioneers Initiative (DEPI) — Graduation Project**  
 **Track:** AWS Machine Learning Track  
