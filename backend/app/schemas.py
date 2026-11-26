@@ -43,6 +43,7 @@ class LoadPrediction(BaseModel):
     cooling_load_kwh: float = Field(..., description="Cooling load prediction in kWh/m²")
     total_load_kwh: float = Field(..., description="Sum of heating and cooling loads")
     algorithm_used: str = Field(..., description="Model algorithm used for prediction")
+    inference_source: str = Field("local-bundle", description="Inference execution provider: 'aws-sagemaker' or 'local-bundle'")
 
 
 class PredictionResponse(BaseModel):
@@ -73,6 +74,7 @@ class OptimizationResponse(BaseModel):
     optimal_value: Any
     lowest_total_load: float
     evaluations: List[OptimizationResult]
+    inference_source: str = Field("local-bundle", description="Inference execution provider: 'aws-sagemaker' or 'local-bundle'")
 
 
 class ModelInfo(BaseModel):
@@ -89,4 +91,6 @@ class HealthResponse(BaseModel):
     status: str = "ok"
     version: str
     models_loaded: bool
+    inference_backend: str = "local-bundle"
+    sagemaker_endpoint: Optional[str] = None
     algorithms_available: List[str]

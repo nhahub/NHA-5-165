@@ -48,6 +48,8 @@ def health_check():
         status="ok",
         version=APP_VERSION,
         models_loaded=service.is_loaded,
+        inference_backend=service.active_backend_name,
+        sagemaker_endpoint=service.endpoint_name if service.use_sagemaker else None,
         algorithms_available=[
             "Linear Regression",
             "Decision Tree",

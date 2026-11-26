@@ -1,59 +1,135 @@
 """
 Model loading and prediction service layer.
-Directly uses the bundled models from artifacts/production/model_bundle.joblib.
+Supports live AWS SageMaker Serverless Endpoint inference (`boto3` sagemaker-runtime)
+with automatic resilient fallback to the local `model_bundle.joblib`.
 """
 
+import json
 import os
+from typing import Any, Dict, List, Optional
+
 import joblib
 import pandas as pd
-from typing import Dict, Any, List
 
-from .config import MODEL_BUNDLE_PATH
+from .config import (
+    AWS_REGION,
+    MODEL_BUNDLE_PATH,
+    SAGEMAKER_ENDPOINT_NAME,
+    USE_AWS_SAGEMAKER,
+)
 from .schemas import (
-    BuildingFeatures, PredictionRequest, PredictionResponse, LoadPrediction,
-    OptimizationRequest, OptimizationResponse, OptimizationResult
+    BuildingFeatures,
+    LoadPrediction,
+    OptimizationRequest,
+    OptimizationResponse,
+    OptimizationResult,
+    PredictionRequest,
+    PredictionResponse,
 )
 
 
 class ModelService:
-    """Loads model_bundle.joblib and runs inference for Heating and Cooling loads."""
+    """Routes predictions to AWS SageMaker Serverless Endpoint (with local bundle fallback)."""
 
     def __init__(self):
-        # Load the production bundle (contains all 10 models + 2 preprocessors + metadata)
-        if not os.path.exists(MODEL_BUNDLE_PATH):
+        self.use_sagemaker = USE_AWS_SAGEMAKER
+        self.endpoint_name = SAGEMAKER_ENDPOINT_NAME
+        self.aws_region = AWS_REGION
+        self._sm_runtime = None
+
+        # Always load local bundle as instant fallback / benchmark metadata source
+        self.bundle: Optional[Dict[str, Any]] = None
+        if os.path.exists(MODEL_BUNDLE_PATH):
+            self.bundle = joblib.load(MODEL_BUNDLE_PATH)
+            print(f"[ModelService] Loaded local model bundle from {MODEL_BUNDLE_PATH}")
+        elif not self.use_sagemaker:
             raise FileNotFoundError(f"Production model bundle not found at {MODEL_BUNDLE_PATH}")
-        self.bundle = joblib.load(MODEL_BUNDLE_PATH)
+
+        if self.use_sagemaker:
+            import boto3
+
+            self._sm_runtime = boto3.client("sagemaker-runtime", region_name=self.aws_region)
+            print(
+                f"[ModelService] AWS SageMaker integration ENABLED -> "
+                f"Endpoint='{self.endpoint_name}' ({self.aws_region})"
+            )
+
         self.is_loaded = True
-        print(f"[ModelService] Successfully loaded model bundle from {MODEL_BUNDLE_PATH}")
+
+    @property
+    def active_backend_name(self) -> str:
+        return "aws-sagemaker" if self.use_sagemaker else "local-bundle"
+
+    def _invoke_sagemaker(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Invoke the AWS SageMaker Serverless Endpoint via boto3 sagemaker-runtime."""
+        if self._sm_runtime is None:
+            import boto3
+
+            self._sm_runtime = boto3.client("sagemaker-runtime", region_name=self.aws_region)
+
+        response = self._sm_runtime.invoke_endpoint(
+            EndpointName=self.endpoint_name,
+            ContentType="application/json",
+            Accept="application/json",
+            Body=json.dumps(payload),
+        )
+        body_bytes = response["Body"].read()
+        return json.loads(body_bytes.decode("utf-8"))
 
     def predict(self, request: PredictionRequest) -> PredictionResponse:
         """
-        1. Select appropriate preprocessor ('linear' or 'tree')
-        2. Retrieve target models ('heating' and 'cooling') for the chosen algorithm
-        3. Transform inputs and compute predictions
+        1. If USE_AWS_SAGEMAKER=true, call the deployed AWS SageMaker Endpoint and return its response.
+        2. Otherwise (or on transient AWS network failure), run local model_bundle.joblib inference.
         """
         algo = request.algorithm or "Random Forest"
+        features_dict = request.features.model_dump()
+        wall_ratio = round(request.features.Wall_Area / request.features.Surface_Area, 4)
+        glazing_h = round(request.features.Glazing_Area * request.features.Overall_Height, 4)
 
-        # Linear regression uses scaled/one-hot pipeline; tree models use unscaled pipeline
+        if self.use_sagemaker:
+            try:
+                aws_res = self._invoke_sagemaker(
+                    {
+                        "action": "predict",
+                        "algorithm": algo,
+                        "features": features_dict,
+                    }
+                )
+                return PredictionResponse(
+                    success=True,
+                    prediction=LoadPrediction(
+                        heating_load_kwh=float(aws_res["heating_load_kwh"]),
+                        cooling_load_kwh=float(aws_res["cooling_load_kwh"]),
+                        total_load_kwh=float(aws_res["total_load_kwh"]),
+                        algorithm_used=aws_res.get("algorithm_used", algo),
+                        inference_source=aws_res.get("inference_source", "aws-sagemaker"),
+                    ),
+                    input_received=features_dict,
+                    engineered_features=aws_res.get(
+                        "engineered_features",
+                        {
+                            "Wall_Surface_Ratio": wall_ratio,
+                            "Glazing_x_Height": glazing_h,
+                        },
+                    ),
+                )
+            except Exception as exc:
+                print(f"[ModelService] AWS SageMaker invoke failed ({exc}); falling back to local bundle.")
+                if self.bundle is None:
+                    raise
+
+        # Local bundle inference
         prep_key = "linear" if algo == "Linear Regression" else "tree"
         preprocessor = self.bundle["preprocessors"][prep_key]
-
-        # Retrieve the individual target models for the selected algorithm
         model_heating = self.bundle["models"]["heating"][algo]
         model_cooling = self.bundle["models"]["cooling"][algo]
 
-        # Convert input dictionary to 1-row DataFrame and transform
-        df_in = pd.DataFrame([request.features.model_dump()])
+        df_in = pd.DataFrame([features_dict])
         X_trans = preprocessor.transform(df_in)
 
-        # Run predictions
         heat_pred = round(float(model_heating.predict(X_trans)[0]), 2)
         cool_pred = round(float(model_cooling.predict(X_trans)[0]), 2)
         total_pred = round(heat_pred + cool_pred, 2)
-
-        # Compute engineered feature values for UI display
-        wall_ratio = round(request.features.Wall_Area / request.features.Surface_Area, 4)
-        glazing_h = round(request.features.Glazing_Area * request.features.Overall_Height, 4)
 
         return PredictionResponse(
             success=True,
@@ -61,19 +137,43 @@ class ModelService:
                 heating_load_kwh=heat_pred,
                 cooling_load_kwh=cool_pred,
                 total_load_kwh=total_pred,
-                algorithm_used=algo
+                algorithm_used=algo,
+                inference_source="local-bundle",
             ),
-            input_received=request.features.model_dump(),
+            input_received=features_dict,
             engineered_features={
                 "Wall_Surface_Ratio": wall_ratio,
-                "Glazing_x_Height": glazing_h
-            }
+                "Glazing_x_Height": glazing_h,
+            },
         )
 
     def optimize(self, request: OptimizationRequest) -> OptimizationResponse:
-        """Evaluate parameter sweep across candidate values to find minimum energy design."""
+        """Evaluate parameter sweep via AWS SageMaker (single batch call) or local bundle."""
         param = request.optimize_param
         base = request.base_features.model_dump()
+
+        if self.use_sagemaker:
+            try:
+                aws_opt = self._invoke_sagemaker(
+                    {
+                        "action": "optimize",
+                        "base_features": base,
+                        "optimize_param": param,
+                        "algorithm": "XGBoost",
+                    }
+                )
+                evals = [OptimizationResult(**item) for item in aws_opt["evaluations"]]
+                return OptimizationResponse(
+                    parameter_optimized=aws_opt["parameter_optimized"],
+                    optimal_value=aws_opt["optimal_value"],
+                    lowest_total_load=float(aws_opt["lowest_total_load"]),
+                    evaluations=evals,
+                    inference_source=aws_opt.get("inference_source", "aws-sagemaker"),
+                )
+            except Exception as exc:
+                print(f"[ModelService] AWS SageMaker optimize failed ({exc}); falling back to local bundle.")
+                if self.bundle is None:
+                    raise
 
         if param == "Glazing_Area":
             candidates = [0.0, 0.10, 0.25, 0.40]
@@ -102,18 +202,21 @@ class ModelService:
                 best_load = total
                 best_val = val
 
-            evaluations.append(OptimizationResult(
-                param_value=val,
-                heating_load=heat,
-                cooling_load=cool,
-                total_load=total
-            ))
+            evaluations.append(
+                OptimizationResult(
+                    param_value=val,
+                    heating_load=heat,
+                    cooling_load=cool,
+                    total_load=total,
+                )
+            )
 
         return OptimizationResponse(
             parameter_optimized=param,
             optimal_value=best_val,
             lowest_total_load=best_load,
-            evaluations=evaluations
+            evaluations=evaluations,
+            inference_source="local-bundle",
         )
 
     def get_models_metadata(self) -> List[Dict[str, Any]]:

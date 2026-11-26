@@ -13,8 +13,9 @@ node_modules/
 frontend/dist/
 frontend/.vite/
 
-# Virtual Environments
+# Virtual Environments & Local Secrets
 .env
+aws_sagemaker/latest_deployment.json
 .venv
 env/
 venv/

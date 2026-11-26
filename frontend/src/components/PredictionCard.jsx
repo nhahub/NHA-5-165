@@ -25,7 +25,8 @@ export default function PredictionCard({ prediction, engineeredFeatures }) {
     );
   }
 
-  const { heating_load_kwh, cooling_load_kwh, total_load_kwh, algorithm_used } = prediction;
+  const { heating_load_kwh, cooling_load_kwh, total_load_kwh, algorithm_used, inference_source } = prediction;
+  const isAws = inference_source === 'aws-sagemaker';
 
   return (
     <div style={{
@@ -49,17 +50,32 @@ export default function PredictionCard({ prediction, engineeredFeatures }) {
           </p>
         </div>
 
-        <span style={{
-          fontSize: '11px',
-          fontWeight: '700',
-          backgroundColor: isDark ? 'rgba(59, 130, 246, 0.2)' : '#eff6ff',
-          color: '#3b82f6',
-          padding: '4px 12px',
-          borderRadius: '20px',
-          border: '1px solid rgba(59, 130, 246, 0.4)'
-        }}>
-          {algorithm_used}
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          {isAws && (
+            <span style={{
+              fontSize: '11px',
+              fontWeight: '700',
+              backgroundColor: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fffbeb',
+              color: '#d97706',
+              padding: '4px 12px',
+              borderRadius: '20px',
+              border: '1px solid rgba(245, 158, 11, 0.45)'
+            }}>
+              ☁️ AWS SageMaker
+            </span>
+          )}
+          <span style={{
+            fontSize: '11px',
+            fontWeight: '700',
+            backgroundColor: isDark ? 'rgba(59, 130, 246, 0.2)' : '#eff6ff',
+            color: '#3b82f6',
+            padding: '4px 12px',
+            borderRadius: '20px',
+            border: '1px solid rgba(59, 130, 246, 0.4)'
+          }}>
+            {algorithm_used}
+          </span>
+        </div>
       </div>
 
       {/* 3 Metric Cards with Radiant Gradients */}

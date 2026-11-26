@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=2560, height=1440, initial-scale=1.0" />
+  <title>THERMOX AI — DEPI AWS Machine Learning Roadmap Infographic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #F4F7FB;
+      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-card-solid: #FFFFFF;
+      --primary-blue: #1E3A8A;
+      --primary-blue-bright: #1D4ED8;
+      --secondary-purple: #6D28D9;
+      --accent-cyan: #0891B2;
+      --highlight-orange: #EA580C;
+      --success-green: #059669;
+      --text-dark: #0F172A;
+      --text-slate: #334155;
+      --text-muted: #64748B;
+      --border-light: rgba(148, 163, 184, 0.28);
+      --shadow-card: 0 10px 28px -6px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 2560px;
+      height: 1440px;
+      overflow: hidden;
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide-canvas {
+      position: relative;
+      width: 2560px;
+      height: 1440px;
+      padding: 30px 46px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background:
+        radial-gradient(circle at 8% 12%, rgba(29, 78, 216, 0.07) 0%, transparent 38%),
+        radial-gradient(circle at 92% 16%, rgba(8, 145, 178, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 75% 88%, rgba(109, 40, 217, 0.06) 0%, transparent 38%),
+        radial-gradient(circle at 22% 90%, rgba(5, 150, 105, 0.06) 0%, transparent 36%),
+        linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+    }
+
+    /* Subtle engineering dot grid */
+    .slide-canvas::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(30, 58, 138, 0.07) 1.25px, transparent 1.25px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .z-layer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ==================== ZONE 1: HEADER (~8% = 114px) ==================== */
+    .top-header {
+      height: 114px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(30, 58, 138, 0.14);
+      border-radius: 22px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-card);
+    }
+
+    .depi-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-right: 26px;
+      border-right: 2px solid rgba(148, 163, 184, 0.25);
+      min-width: 510px;
+    }
+
+    .depi-emblem {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1E3A8A 0%, #0891B2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(30, 58, 138, 0.22);
+      flex-shrink: 0;
+    }
+
+    .depi-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .depi-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .depi-wordmark {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--primary-blue);
+    }
+
+    .depi-sub {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+
+    .track-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 3px;
+      padding: 4px 13px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(29, 78, 216, 0.1) 0%, rgba(8, 145, 178, 0.12) 100%);
+      border: 1px solid rgba(29, 78, 216, 0.25);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary-blue-bright);
+      width: fit-content;
+    }
+
+    .project-title-block {
+      flex: 1;
+      padding: 0 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .project-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-dark);
+    }
+
+    .project-title span {
+      background: linear-gradient(90deg, #1D4ED8 0%, #0891B2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .team-badge {
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(109, 40, 217, 0.09);
+      border: 1px solid rgba(109, 40, 217, 0.25);
+      color: var(--secondary-purple);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .project-summary {
+      font-size: 16.5px;
+      font-weight: 500;
+      color: var(--text-slate);
+    }
+
+    .header-kpis {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .kpi-chip {
+      padding: 10px 18px;
+      border-radius: 16px;
+      background: #F8FAFC;
+      border: 1.5px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 148px;
+    }
+
+    .kpi-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .kpi-lbl {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    /* ==================== ZONE 2: 5-STAGE HORIZONTAL ROADMAP (322px) ==================== */
+    .roadmap-section {
+      height: 322px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary-blue);
+    }
+
+    .section-heading-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-blue-bright), var(--accent-cyan));
+    }
+
+    .flow-hint {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .roadmap-grid {
+      position: relative;
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .roadmap-card {
+      position: relative;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 20px 22px;
+      border: 1.5px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      overflow: hidden;
+    }
+
+    .roadmap-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--card-accent, var(--primary-blue-bright));
+    }
+
+    .roadmap-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--icon-bg);
+      color: var(--card-accent);
+      border: 1px solid var(--icon-border);
+    }
+
+    .step-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--icon-bg);
+      color: var(--card-accent);
+    }
+
+    .roadmap-card-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: -0.015em;
+    }
+
+    .kw-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .kw-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--text-slate);
+      line-height: 1.25;
+    }
+
+    .kw-bullet {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--card-accent);
+      flex-shrink: 0;
+    }
+
+    /* Connector arrows between roadmap cards */
+    .card-connector {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 26px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==================== ZONE 3: ARCHITECTURE + AI MODULES (458px) ==================== */
+    .middle-engineering-row {
+      height: 458px;
+      display: grid;
+      grid-template-columns: 1.56fr 1fr;
+      gap: 24px;
+    }
+
+    .glass-panel {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
+      border: 1.5px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      padding: 20px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .panel-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary-blue);
+      letter-spacing: -0.01em;
+    }
+
+    .panel-badge {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(8, 145, 178, 0.1);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(8, 145, 178, 0.25);
+    }
+
+    /* Architecture 6-node horizontal pipeline */
+    .arch-pipeline {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      align-items: stretch;
+      margin: 16px 0 14px 0;
+      position: relative;
+    }
+
+    .arch-node {
+      position: relative;
+      background: #FFFFFF;
+      border: 1.5px solid var(--node-border, rgba(29, 78, 216, 0.22));
+      border-radius: 18px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 9px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    }
+
+    .arch-node-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 15px;
+      background: var(--node-bg, rgba(29, 78, 216, 0.08));
+      color: var(--node-color, var(--primary-blue-bright));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arch-step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--node-color, var(--primary-blue-bright));
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .arch-node-title {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .arch-node-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .arch-mini-tag {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-slate);
+      background: #F8FAFC;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 8px;
+      padding: 4px 6px;
+    }
+
+    .arch-arrow {
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 22px;
+      height: 22px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      border: 1.5px solid rgba(29, 78, 216, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-blue-bright);
+    }
+
+    /* Cloud & API strip under architecture */
+    .arch-deployment-strip {
+      background: linear-gradient(90deg, rgba(30, 58, 138, 0.05) 0%, rgba(8, 145, 178, 0.07) 50%, rgba(5, 150, 105, 0.06) 100%);
+      border: 1px solid rgba(30, 58, 138, 0.14);
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .strip-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .strip-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 7px;
+      background: #FFFFFF;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--primary-blue-bright);
+    }
+
+    /* AI Components 2x2 connected grid */
+    .ai-grid-wrapper {
+      position: relative;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 22px 26px;
+      margin-top: 14px;
+    }
+
+    .ai-connector-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ai-hub-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1E3A8A 0%, #6D28D9 100%);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.05;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      font-weight: 800;
+      box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.98), 0 6px 18px rgba(109, 40, 217, 0.35);
+      z-index: 5;
+    }
+
+    .ai-module-card {
+      position: relative;
+      z-index: 2;
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 14px 18px;
+      border: 1.5px solid var(--ai-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+    }
+
+    .ai-mod-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ai-mod-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--ai-bg);
+      color: var(--ai-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ai-mod-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .ai-mod-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-left: 2px;
+    }
+
+    .ai-mod-list li {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text-slate);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-mod-list li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ai-color);
+      flex-shrink: 0;
+    }
+
+    /* ==================== ZONE 4: TECH STACK + TIMELINE + FUTURE (264px) ==================== */
+    .execution-row {
+      height: 264px;
+      display: grid;
+      grid-template-columns: 1.05fr 1.25fr 0.7fr;
+      gap: 24px;
+    }
+
+    .badge-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      align-content: center;
+      flex: 1;
+      padding-top: 8px;
+    }
+
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 11px;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(148, 163, 184, 0.32);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+    }
+
+    .tech-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    /* 6-Week Horizontal Timeline */
+    .timeline-track {
+      position: relative;
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding-top: 12px;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 33px;
+      left: 48px;
+      right: 48px;
+      height: 4px;
+      background: linear-gradient(90deg, #1D4ED8 0%, #0891B2 40%, #6D28D9 75%, #059669 100%);
+      border-radius: 4px;
+      z-index: 1;
+    }
+
+    .tl-step {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .tl-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3.5px solid var(--tl-color);
+      color: var(--tl-color);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    }
+
+    .tl-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 12px;
+      padding: 10px 8px;
+      width: 100%;
+      min-height: 96px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .tl-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .tl-sub {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.25;
+    }
+
+    /* Future Enhancements */
+    .future-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      flex: 1;
+      padding-top: 6px;
+    }
+
+    .future-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #FFFFFF;
+      border: 1px solid rgba(109, 40, 217, 0.2);
+      border-radius: 12px;
+      padding: 11px 14px;
+    }
+
+    .future-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(109, 40, 217, 0.1);
+      color: var(--secondary-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .future-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-slate);
+    }
+
+    /* ==================== ZONE 5: PROJECT OUTCOMES BAR (130px) ==================== */
+    .outcomes-bar {
+      height: 130px;
+      background: linear-gradient(90deg, #0F172A 0%, #1E3A8A 55%, #0F172A 100%);
+      border-radius: 22px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      color: #FFFFFF;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+    }
+
+    .outcomes-label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-right: 24px;
+      border-right: 1.5px solid rgba(255, 255, 255, 0.18);
+      min-width: 255px;
+    }
+
+    .outcomes-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #38BDF8;
+    }
+
+    .outcomes-heading {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+    }
+
+    .outcomes-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .outcome-pill {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 15px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .outcome-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: rgba(56, 189, 248, 0.18);
+      color: #38BDF8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .outcome-icon.green {
+      background: rgba(16, 185, 129, 0.22);
+      color: #34D399;
+    }
+
+    .outcome-icon.orange {
+      background: rgba(249, 115, 22, 0.22);
+      color: #FB923C;
+    }
+
+    .outcome-icon.purple {
+      background: rgba(167, 139, 250, 0.22);
+      color: #C4B5FD;
+    }
+
+    .outcome-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    .outcome-name {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      white-space: nowrap;
+    }
+
+    .outcome-detail {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: #CBD5E1;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-canvas">
+
+    <!-- ==================== ZONE 1: MANDATORY DEPI HEADER (~8% Slide Height) ==================== -->
+    <header class="top-header z-layer">
+      <div class="depi-brand">
+        <div class="depi-emblem">
+          <!-- Digital Egypt Globe & Circuit Pyramid Vector Emblem -->
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="24" cy="18" r="10" />
+            <ellipse cx="24" cy="18" rx="4.5" ry="10" />
+            <line x1="14" y1="18" x2="34" y2="18" />
+            <path d="M12 38L24 28L36 38" />
+            <circle cx="12" cy="38" r="2.2" fill="#38BDF8" stroke="none" />
+            <circle cx="24" cy="28" r="2.2" fill="#34D399" stroke="none" />
+            <circle cx="36" cy="38" r="2.2" fill="#38BDF8" stroke="none" />
+            <line x1="24" y1="31" x2="24" y2="41" />
+          </svg>
+        </div>
+        <div class="depi-text-group">
+          <div class="depi-topline">
+            <span class="depi-wordmark">DEPI</span>
+            <span class="depi-sub">Digital Egypt Pioneers Initiative</span>
+          </div>
+          <div class="track-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Track: AWS Machine Learning
+          </div>
+        </div>
+      </div>
+
+      <div class="project-title-block">
+        <div class="title-row">
+          <h1 class="project-title"><span>THERMOX AI</span> — Building Energy Efficiency &amp; 3D Digital Twin</h1>
+          <span class="team-badge">Team CloudXAi (NHA-5-165)</span>
+        </div>
+        <p class="project-summary">Real-time ML surrogate &amp; WebGL 3D digital twin predicting residential heating &amp; cooling loads from 8 envelope parameters before construction.</p>
+      </div>
+
+      <div class="header-kpis">
+        <div class="kpi-chip">
+          <span class="kpi-val" style="color: var(--success-green);">0.9983</span>
+          <span class="kpi-lbl">Heating R² (XGB)</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-val" style="color: var(--accent-cyan);">0.9942</span>
+          <span class="kpi-lbl">Cooling R² (XGB)</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-val" style="color: var(--secondary-purple);">10 Models</span>
+          <span class="kpi-lbl">5 Algos × 2 Loads</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-val" style="color: var(--highlight-orange);">&lt; 5 ms</span>
+          <span class="kpi-lbl">API Inference</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== ZONE 2: LEFT-TO-RIGHT STRATEGIC ROADMAP ==================== -->
+    <section class="roadmap-section z-layer">
+      <div class="section-bar">
+        <div class="section-heading">
+          <span class="section-heading-dot"></span>
+          Strategic Project Roadmap — Problem to Value Delivery
+        </div>
+        <div class="flow-hint">
+          LEFT-TO-RIGHT FLOW
+          <svg width="64" height="14" viewBox="0 0 64 14" fill="none">
+            <line x1="2" y1="7" x2="56" y2="7" stroke="#1D4ED8" stroke-width="2.2" stroke-dasharray="4 4"/>
+            <path d="M52 2L60 7L52 12" stroke="#1D4ED8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="roadmap-grid">
+        <!-- Connector Arrows Between Roadmap Cards -->
+        <div class="card-connector" style="left: calc(20% - 13px);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/><path d="M9 7l5 5-5 5" stroke="#1D4ED8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card-connector" style="left: calc(40% - 13px);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/><path d="M9 7l5 5-5 5" stroke="#EA580C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card-connector" style="left: calc(60% - 13px);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/><path d="M9 7l5 5-5 5" stroke="#0891B2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card-connector" style="left: calc(80% - 13px);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/><path d="M9 7l5 5-5 5" stroke="#6D28D9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <!-- Block 1: Project Overview -->
+        <div class="roadmap-card" style="--card-accent: #1D4ED8; --icon-bg: rgba(29,78,216,0.09); --icon-border: rgba(29,78,216,0.22);">
+          <div class="roadmap-card-head">
+            <div class="icon-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 13v.01"/><path d="M9 17v.01"/></svg>
+            </div>
+            <span class="step-tag">01 • OVERVIEW</span>
+          </div>
+          <h3 class="roadmap-card-title">Project Overview</h3>
+          <ul class="kw-list">
+            <li><span class="kw-bullet"></span>768 UCI Building Archetypes</li>
+            <li><span class="kw-bullet"></span>8 Envelope Design Parameters</li>
+            <li><span class="kw-bullet"></span>Dual Loads: Heating &amp; Cooling</li>
+            <li><span class="kw-bullet"></span>Pre-Construction ML Surrogate</li>
+          </ul>
+        </div>
+
+        <!-- Block 2: Business Problem -->
+        <div class="roadmap-card" style="--card-accent: #EA580C; --icon-bg: rgba(234,88,12,0.09); --icon-border: rgba(234,88,12,0.22);">
+          <div class="roadmap-card-head">
+            <div class="icon-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <span class="step-tag">02 • PROBLEM</span>
+          </div>
+          <h3 class="roadmap-card-title">Business Problem</h3>
+          <ul class="kw-list">
+            <li><span class="kw-bullet"></span>40%+ Residential HVAC Energy</li>
+            <li><span class="kw-bullet"></span>Slow CAD Physics Runs (Hours)</li>
+            <li><span class="kw-bullet"></span>Irreversible Envelope Choices</li>
+            <li><span class="kw-bullet"></span>Costly Post-Build Retrofits</li>
+          </ul>
+        </div>
+
+        <!-- Block 3: Proposed Solution -->
+        <div class="roadmap-card" style="--card-accent: #0891B2; --icon-bg: rgba(8,145,178,0.09); --icon-border: rgba(8,145,178,0.22);">
+          <div class="roadmap-card-head">
+            <div class="icon-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <span class="step-tag">03 • SOLUTION</span>
+          </div>
+          <h3 class="roadmap-card-title">Proposed Solution</h3>
+          <ul class="kw-list">
+            <li><span class="kw-bullet"></span>Sub-5ms Surrogate Inference</li>
+            <li><span class="kw-bullet"></span>Interactive 3D Digital Twin</li>
+            <li><span class="kw-bullet"></span>EPC Efficiency Grading (A+–E)</li>
+            <li><span class="kw-bullet"></span>Automated Parameter Optimizer</li>
+          </ul>
+        </div>
+
+        <!-- Block 4: Target Users -->
+        <div class="roadmap-card" style="--card-accent: #6D28D9; --icon-bg: rgba(109,40,217,0.09); --icon-border: rgba(109,40,217,0.22);">
+          <div class="roadmap-card-head">
+            <div class="icon-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <span class="step-tag">04 • USERS</span>
+          </div>
+          <h3 class="roadmap-card-title">Target Stakeholders</h3>
+          <ul class="kw-list">
+            <li><span class="kw-bullet"></span>Sustainable Architects</li>
+            <li><span class="kw-bullet"></span>MEP &amp; HVAC Consultants</li>
+            <li><span class="kw-bullet"></span>Green Building Auditors</li>
+            <li><span class="kw-bullet"></span>Cloud &amp; MLOps Engineers</li>
+          </ul>
+        </div>
+
+        <!-- Block 5: Core Features -->
+        <div class="roadmap-card" style="--card-accent: #059669; --icon-bg: rgba(5,150,105,0.09); --icon-border: rgba(5,150,105,0.22);">
+          <div class="roadmap-card-head">
+            <div class="icon-box">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            </div>
+            <span class="step-tag">05 • FEATURES</span>
+          </div>
+          <h3 class="roadmap-card-title">Core Capabilities</h3>
+          <ul class="kw-list">
+            <li><span class="kw-bullet"></span>Parametric 3D House &amp; Compass</li>
+            <li><span class="kw-bullet"></span>FLIR Thermal Infrared Shading</li>
+            <li><span class="kw-bullet"></span>10-Model Benchmark Suite</li>
+            <li><span class="kw-bullet"></span>Dark / Light Executive UI</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ZONE 3: SYSTEM ARCHITECTURE + AI MODULES ==================== -->
+    <section class="middle-engineering-row z-layer">
+
+      <!-- LEFT: ACTUAL VERIFIED SYSTEM ARCHITECTURE -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E3A8A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="8" height="8" rx="2"/><rect x="14" y="2" width="8" height="8" rx="2"/><rect x="8" y="14" width="8" height="8" rx="2"/><path d="M6 10v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"/></svg>
+            <h2 class="panel-title">End-to-End System Architecture (Decoupled Production Pipeline)</h2>
+          </div>
+          <span class="panel-badge">Zero Fabricated Layers • File &amp; Bundle Backed</span>
+        </div>
+
+        <div class="arch-pipeline">
+          <!-- Node 1: User -->
+          <div class="arch-node" style="--node-color: #1E3A8A; --node-bg: rgba(30,58,138,0.08); --node-border: rgba(30,58,138,0.22);">
+            <div class="arch-node-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span class="arch-step-num">Layer 01</span>
+            <div class="arch-node-title">Architect / User</div>
+            <div class="arch-node-tags">
+              <span class="arch-mini-tag">8 Envelope Sliders</span>
+              <span class="arch-mini-tag">Shape Presets</span>
+              <span class="arch-mini-tag">Model Selector</span>
+            </div>
+            <div class="arch-arrow">→</div>
+          </div>
+
+          <!-- Node 2: Frontend -->
+          <div class="arch-node" style="--node-color: #0891B2; --node-bg: rgba(8,145,178,0.09); --node-border: rgba(8,145,178,0.26);">
+            <div class="arch-node-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <span class="arch-step-num">Layer 02</span>
+            <div class="arch-node-title">React + Three.js</div>
+            <div class="arch-node-tags">
+              <span class="arch-mini-tag">Vite SPA (Vercel)</span>
+              <span class="arch-mini-tag">WebGL 3D Twin</span>
+              <span class="arch-mini-tag">Client Fallback</span>
+            </div>
+            <div class="arch-arrow">→</div>
+          </div>
+
+          <!-- Node 3: Backend API -->
+          <div class="arch-node" style="--node-color: #059669; --node-bg: rgba(5,150,105,0.09); --node-border: rgba(5,150,105,0.26);">
+            <div class="arch-node-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <span class="arch-step-num">Layer 03</span>
+            <div class="arch-node-title">FastAPI Service</div>
+            <div class="arch-node-tags">
+              <span class="arch-mini-tag">Pydantic Bounds</span>
+              <span class="arch-mini-tag">CORS + Uvicorn</span>
+              <span class="arch-mini-tag">Render / Heroku</span>
+            </div>
+            <div class="arch-arrow">→</div>
+          </div>
+
+          <!-- Node 4: Shared Preprocessing Tools -->
+          <div class="arch-node" style="--node-color: #6D28D9; --node-bg: rgba(109,40,217,0.09); --node-border: rgba(109,40,217,0.26);">
+            <div class="arch-node-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            </div>
+            <span class="arch-step-num">Layer 04</span>
+            <div class="arch-node-title">Sklearn Pipelines</div>
+            <div class="arch-node-tags">
+              <span class="arch-mini-tag">Engineered Ratios</span>
+              <span class="arch-mini-tag">prep_linear (OHE)</span>
+              <span class="arch-mini-tag">prep_tree (Raw)</span>
+            </div>
+            <div class="arch-arrow">→</div>
+          </div>
+
+          <!-- Node 5: AI Model Bundle -->
+          <div class="arch-node" style="--node-color: #EA580C; --node-bg: rgba(234,88,12,0.09); --node-border: rgba(234,88,12,0.26);">
+            <div class="arch-node-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M12 2a4 4 0 0 1 4 4v1a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3v1a4 4 0 0 1-8 0v-1a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3V6a4 4 0 0 1 4-4z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg>
+            </div>
+            <span class="arch-step-num">Layer 05</span>
+            <div class="arch-node-title">10-Model Bundle</div>
+            <div class="arch-node-tags">
+              <span class="arch-mini-tag">model_bundle.joblib</span>
+              <span class="arch-mini-tag">13.4 MB In-Memory</span>
+              <span class="arch-mini-tag">Heating + Cooling</span>
+            </div>
+            <div class="arch-arrow">→</div>
+          </div>
+
+          <!-- Node 6: Dashboard & Results -->
+          <div class="arch-node" style="--node-color: #1D4ED8; --node-bg: rgba(29,78,216,0.09); --node-border: rgba(29,78,216,0.26);">
+            <div class="arch-node-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <span class="arch-step-num">Layer 06</span>
+            <div class="arch-node-title">Thermal Insights</div>
+            <div class="arch-node-tags">
+              <span class="arch-mini-tag">kWh/m² &amp; EPC A+–E</span>
+              <span class="arch-mini-tag">3D IR Heatmap</span>
+              <span class="arch-mini-tag">Optimal Sweep</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- REST API & Cloud Deployment Strip -->
+        <div class="arch-deployment-strip">
+          <div class="strip-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.3"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            REST Endpoints:
+            <span class="strip-code">POST /api/predict</span>
+            <span class="strip-code">POST /api/optimize</span>
+            <span class="strip-code">GET /api/models</span>
+            <span class="strip-code">GET /api/health</span>
+          </div>
+          <div class="strip-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.3"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            Cloud Strategy:
+            <span class="strip-code" style="color:#059669;">Vercel Edge UI</span>
+            <span class="strip-code" style="color:#0891B2;">Render API + Cron</span>
+            <span class="strip-code" style="color:#6D28D9;">Colab / AWS Track</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: AI & ML COMPONENTS MODULE -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6D28D9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>
+            <h2 class="panel-title" style="color: var(--secondary-purple);">AI &amp; Machine Learning Modules</h2>
+          </div>
+          <span class="panel-badge" style="background: rgba(109,40,217,0.1); color: var(--secondary-purple); border-color: rgba(109,40,217,0.25);">80/20 Split • 5-Fold CV</span>
+        </div>
+
+        <div class="ai-grid-wrapper">
+          <svg class="ai-connector-svg" viewBox="0 0 800 360" preserveAspectRatio="none">
+            <line x1="250" y1="115" x2="550" y2="245" stroke="#6D28D9" stroke-width="2" stroke-dasharray="5 5" opacity="0.55" />
+            <line x1="550" y1="115" x2="250" y2="245" stroke="#0891B2" stroke-width="2" stroke-dasharray="5 5" opacity="0.55" />
+            <line x1="400" y1="70" x2="400" y2="290" stroke="#1D4ED8" stroke-width="2" stroke-dasharray="4 4" opacity="0.45" />
+            <line x1="170" y1="180" x2="630" y2="180" stroke="#1D4ED8" stroke-width="2" stroke-dasharray="4 4" opacity="0.45" />
+          </svg>
+          <div class="ai-hub-center">ML<br/>CORE</div>
+
+          <!-- AI Mod 1: Feature Engineering -->
+          <div class="ai-module-card" style="--ai-color: #1D4ED8; --ai-bg: rgba(29,78,216,0.1); --ai-border: rgba(29,78,216,0.24);">
+            <div class="ai-mod-header">
+              <div class="ai-mod-icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <div class="ai-mod-title">Feature Engineering</div>
+            </div>
+            <ul class="ai-mod-list">
+              <li>Wall_Surface_Ratio (X3 / X2)</li>
+              <li>Glazing_x_Height (X7 × X5)</li>
+              <li>Leak-Free Train-Only Fit</li>
+            </ul>
+          </div>
+
+          <!-- AI Mod 2: Multi-Model Prediction -->
+          <div class="ai-module-card" style="--ai-color: #EA580C; --ai-bg: rgba(234,88,12,0.1); --ai-border: rgba(234,88,12,0.24);">
+            <div class="ai-mod-header">
+              <div class="ai-mod-icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="ai-mod-title">10-Model Prediction</div>
+            </div>
+            <ul class="ai-mod-list">
+              <li>XGBoost Champion (R² 0.9983)</li>
+              <li>Random Forest &amp; Grad Boost</li>
+              <li>Linear Reg &amp; Decision Tree</li>
+            </ul>
+          </div>
+
+          <!-- AI Mod 3: Passive Design Optimizer -->
+          <div class="ai-module-card" style="--ai-color: #059669; --ai-bg: rgba(5,150,105,0.1); --ai-border: rgba(5,150,105,0.24);">
+            <div class="ai-mod-header">
+              <div class="ai-mod-icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+              </div>
+              <div class="ai-mod-title">Design Optimization</div>
+            </div>
+            <ul class="ai-mod-list">
+              <li>Glazing Ratio Sweeps (0–40%)</li>
+              <li>Cardinal Orientation Search</li>
+              <li>Compactness Min-Load Finder</li>
+            </ul>
+          </div>
+
+          <!-- AI Mod 4: Thermal Visualization -->
+          <div class="ai-module-card" style="--ai-color: #0891B2; --ai-bg: rgba(8,145,178,0.1); --ai-border: rgba(8,145,178,0.24);">
+            <div class="ai-mod-header">
+              <div class="ai-mod-icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <div class="ai-mod-title">Thermal Analytics</div>
+            </div>
+            <ul class="ai-mod-list">
+              <li>3D False-Color IR Shading</li>
+              <li>Heating vs Cooling Split Bar</li>
+              <li>Envelope Heat-Loss Breakdown</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== ZONE 4: TECH STACK + TIMELINE + FUTURE ==================== -->
+    <section class="execution-row z-layer">
+
+      <!-- TECH STACK BADGES (ONLY EXPLICITLY MENTIONED) -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E3A8A" stroke-width="2.2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <h2 class="panel-title">Verified Technology Stack</h2>
+          </div>
+          <span class="panel-badge">18 Verified Tools</span>
+        </div>
+        <div class="badge-cloud">
+          <span class="tech-badge"><span class="tech-dot" style="background:#1D4ED8;"></span>Python 3.12</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#059669;"></span>FastAPI</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#0891B2;"></span>React 18</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#6D28D9;"></span>Vite 5</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#0F172A;"></span>Three.js</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#EA580C;"></span>XGBoost 2.0</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#F97316;"></span>scikit-learn</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#1E3A8A;"></span>Pandas</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#0284C7;"></span>NumPy</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#7C3AED;"></span>Pydantic v2</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#059669;"></span>Joblib</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#0891B2;"></span>Matplotlib</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#06B6D4;"></span>Seaborn</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#10B981;"></span>Pytest</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#0F172A;"></span>Vercel</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#059669;"></span>Render</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#6D28D9;"></span>Heroku</span>
+          <span class="tech-badge"><span class="tech-dot" style="background:#EA580C;"></span>GitHub &amp; Colab</span>
+        </div>
+      </div>
+
+      <!-- DEVELOPMENT TIMELINE (WEEKS 1 TO 6) -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0891B2" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <h2 class="panel-title" style="color: var(--accent-cyan);">6-Sprint Development Timeline</h2>
+          </div>
+          <span class="panel-badge">Sequential WBS Sprints</span>
+        </div>
+        <div class="timeline-track">
+          <div class="timeline-line"></div>
+
+          <div class="tl-step" style="--tl-color: #1D4ED8;">
+            <div class="tl-circle">W1</div>
+            <div class="tl-card">
+              <div class="tl-title">Planning &amp; EDA</div>
+              <div class="tl-sub">Quality Audit &amp; 6 Plots</div>
+            </div>
+          </div>
+
+          <div class="tl-step" style="--tl-color: #0284C7;">
+            <div class="tl-circle">W2</div>
+            <div class="tl-card">
+              <div class="tl-title">Preprocessing</div>
+              <div class="tl-sub">80/20 Split &amp; Ratios</div>
+            </div>
+          </div>
+
+          <div class="tl-step" style="--tl-color: #0891B2;">
+            <div class="tl-circle">W3</div>
+            <div class="tl-card">
+              <div class="tl-title">Basic Models</div>
+              <div class="tl-sub">LR, DT, RF &amp; 5-Fold CV</div>
+            </div>
+          </div>
+
+          <div class="tl-step" style="--tl-color: #6D28D9;">
+            <div class="tl-circle">W4</div>
+            <div class="tl-card">
+              <div class="tl-title">XGBoost Tuning</div>
+              <div class="tl-sub">SearchCV &amp; Bundle</div>
+            </div>
+          </div>
+
+          <div class="tl-step" style="--tl-color: #EA580C;">
+            <div class="tl-circle">W5</div>
+            <div class="tl-card">
+              <div class="tl-title">3D App &amp; API</div>
+              <div class="tl-sub">FastAPI + Three.js Twin</div>
+            </div>
+          </div>
+
+          <div class="tl-step" style="--tl-color: #059669;">
+            <div class="tl-circle">W6</div>
+            <div class="tl-card">
+              <div class="tl-title">Cloud &amp; Docs</div>
+              <div class="tl-sub">Vercel, Render &amp; QA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FUTURE ENHANCEMENTS -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6D28D9" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <h2 class="panel-title" style="color: var(--secondary-purple);">Future Enhancements</h2>
+          </div>
+        </div>
+        <ul class="future-list">
+          <li class="future-item">
+            <div class="future-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            </div>
+            <span class="future-text">Multi-Climate Zone Calibration</span>
+          </li>
+          <li class="future-item">
+            <div class="future-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
+            </div>
+            <span class="future-text">Curvilinear &amp; BIM 3D Geometries</span>
+          </li>
+          <li class="future-item">
+            <div class="future-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <span class="future-text">AWS S3 &amp; SageMaker MLOps Sync</span>
+          </li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ==================== ZONE 5: BOTTOM PROJECT OUTCOMES & DELIVERABLES ==================== -->
+    <footer class="outcomes-bar z-layer">
+      <div class="outcomes-label">
+        <span class="outcomes-eyebrow">Verified Deliverables</span>
+        <span class="outcomes-heading">Project Outcomes</span>
+      </div>
+
+      <div class="outcomes-grid">
+        <div class="outcome-pill">
+          <div class="outcome-icon">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="outcome-meta">
+            <span class="outcome-name">3D Web Application</span>
+            <span class="outcome-detail">thermoxai.vercel.app</span>
+          </div>
+        </div>
+
+        <div class="outcome-pill">
+          <div class="outcome-icon green">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </div>
+          <div class="outcome-meta">
+            <span class="outcome-name">Production REST API</span>
+            <span class="outcome-detail">thermox-ai.onrender.com</span>
+          </div>
+        </div>
+
+        <div class="outcome-pill">
+          <div class="outcome-icon orange">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <div class="outcome-meta">
+            <span class="outcome-name">10-Model AI Bundle</span>
+            <span class="outcome-detail">13.4 MB • R² 0.9983</span>
+          </div>
+        </div>
+
+        <div class="outcome-pill">
+          <div class="outcome-icon purple">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="outcome-meta">
+            <span class="outcome-name">5 Jupyter &amp; Colab Labs</span>
+            <span class="outcome-detail">EDA • FE • Tuning</span>
+          </div>
+        </div>
+
+        <div class="outcome-pill">
+          <div class="outcome-icon green">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="outcome-meta">
+            <span class="outcome-name">Automated QA Suite</span>
+            <span class="outcome-detail">14/14 Pytest Passing</span>
+          </div>
+        </div>
+
+        <div class="outcome-pill">
+          <div class="outcome-icon">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="outcome-meta">
+            <span class="outcome-name">Full Source &amp; Docs</span>
+            <span class="outcome-detail">SRS • SAD • Model Card</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

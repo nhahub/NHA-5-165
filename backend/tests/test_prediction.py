@@ -1,7 +1,7 @@
 """Tests for prediction service and model logic."""
 
 import pytest
-from backend.app.schemas import BuildingFeatures, PredictionRequest
+from backend.app.schemas import BuildingFeatures, OptimizationRequest, PredictionRequest
 from backend.app.service import service
 
 
@@ -62,3 +62,49 @@ def test_engineered_features_calculation():
     res = service.predict(req)
     assert res.engineered_features["Wall_Surface_Ratio"] == 0.5
     assert res.engineered_features["Glazing_x_Height"] == 1.75
+
+
+def test_sagemaker_endpoint_contract(monkeypatch):
+    """Verify FastAPI service calls AWS SageMaker contract and returns aws-sagemaker source."""
+    def fake_invoke(payload):
+        if payload.get("action") == "optimize":
+            return {
+                "parameter_optimized": "Glazing_Area",
+                "optimal_value": 0.0,
+                "lowest_total_load": 36.88,
+                "evaluations": [
+                    {"param_value": 0.0, "heating_load": 15.55, "cooling_load": 21.33, "total_load": 36.88},
+                    {"param_value": 0.1, "heating_load": 24.45, "cooling_load": 26.23, "total_load": 50.68},
+                ],
+                "inference_source": "aws-sagemaker",
+            }
+        return {
+            "heating_load_kwh": 24.45,
+            "cooling_load_kwh": 26.23,
+            "total_load_kwh": 50.68,
+            "algorithm_used": payload["algorithm"],
+            "inference_source": "aws-sagemaker",
+            "engineered_features": {"Wall_Surface_Ratio": 0.5714, "Glazing_x_Height": 0.7},
+        }
+
+    monkeypatch.setattr(service, "use_sagemaker", True)
+    monkeypatch.setattr(service, "_invoke_sagemaker", fake_invoke)
+
+    features = BuildingFeatures(
+        Relative_Compactness=0.98,
+        Surface_Area=514.5,
+        Wall_Area=294.0,
+        Roof_Area=110.25,
+        Overall_Height=7.0,
+        Orientation=2,
+        Glazing_Area=0.10,
+        Glazing_Area_Distribution=1,
+    )
+
+    pred_res = service.predict(PredictionRequest(features=features, algorithm="XGBoost"))
+    assert pred_res.prediction.inference_source == "aws-sagemaker"
+    assert pred_res.prediction.total_load_kwh == 50.68
+
+    opt_res = service.optimize(OptimizationRequest(base_features=features, optimize_param="Glazing_Area"))
+    assert opt_res.inference_source == "aws-sagemaker"
+    assert opt_res.optimal_value == 0.0
